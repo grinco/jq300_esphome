@@ -60,14 +60,14 @@ uart:
           str = buf;
           sprintf(buf, "%02X", bytes[5]);
           str += buf;
-          //id(a).publish_state(std::stoi(str));
+          id(a).publish_state(std::stoi(str));
           
           // b is bytes[6-7]
           sprintf(buf, "%02X", bytes[6]);
           str = buf;
           sprintf(buf, "%02X", bytes[7]);
           str += buf;
-          //id(b).publish_state(std::stoi(str));
+          id(b).publish_state(std::stoi(str));
 
           // temp is bytes[8]
           sprintf(buf, "%02X", bytes[8]);
@@ -116,3 +116,13 @@ sensor:
     accuracy_decimals: 0
     device_class: "pm25"
     id: "pm25"
+  - platform: template
+    name: "A"
+    state_class: "measurement"
+    accuracy_decimals: 0
+    id: "a"
+  - platform: template
+    name: "B"
+    state_class: "measurement"
+    accuracy_decimals: 0
+    id: "b"
