@@ -1,6 +1,7 @@
 # jq300_esphome
 JQ300 ESPHome Configuration and flashing instructions
 
+0. Order an SPI flasher with a clip tool like [the one that I ordered](https://www.aliexpress.com/item/4001045543107.html), and wait...
 1. Dump the original firmware using flashrom tool `flashrom -p ch341a_spi -r ./jq300-orig.bin`
 2. Create the device in esphome and download firmware using this template:
 ```
