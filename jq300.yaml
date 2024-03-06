@@ -44,22 +44,30 @@ uart:
           uint8_t separator = ':';         
           UARTDebug::log_hex(direction, bytes, separator);
 
-          // Convert uart text to string and publish raw data
-          //std::string rawdata(bytes.begin(), bytes.end());
-          //id(rawString).publish_state(rawdata);
-
           // Command received
           if (bytes.size()==7) {
-            if(bytes[2]==0xF3) { ESP_LOGD("uart_bus","short press"); }
-            if(bytes[2]==0xF4) { ESP_LOGD("uart_bus","long press"); }
+            if(bytes[2]==0xF3) { ESP_LOGD("uart_bus","short press - doing nothing"); }
+            if(bytes[2]==0xF4) { ESP_LOGD("uart_bus","long press - doing nothing"); }
           }
 
           // Measurement received
           if (bytes.size()==15) {
-          // a is bytes[4-5]
-          // b is bytes[6-7]
-          
           char buf[5];
+          std::string str;
+          
+          // a is bytes[4-5]
+          sprintf(buf, "%02X", bytes[4]);
+          str = buf;
+          sprintf(buf, "%02X", bytes[5]);
+          str += buf;
+          //id(a).publish_state(std::stoi(str));
+          
+          // b is bytes[6-7]
+          sprintf(buf, "%02X", bytes[6]);
+          str = buf;
+          sprintf(buf, "%02X", bytes[7]);
+          str += buf;
+          //id(b).publish_state(std::stoi(str));
 
           // temp is bytes[8]
           sprintf(buf, "%02X", bytes[8]);
@@ -70,12 +78,11 @@ uart:
           id(humidity).publish_state(std::atoi(buf));
           
           // dust is bytes[12-13] uint16_t((bytes[12] << 8) | bytes[13] ))
-          std::string dust;
           sprintf(buf, "%02X", bytes[12]);
-          dust += buf;
+          str = buf;
           sprintf(buf, "%02X", bytes[13]);
-          dust += buf;
-          id(pm25).publish_state(std::stoi(dust));
+          str += buf;
+          id(pm25).publish_state(std::stoi(str));
           }
 
 stream_server:
