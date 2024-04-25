@@ -117,5 +117,5 @@ sensor:
     device_class: "pm25"
     id: "pm25"
 ```
-3. Download and path the firmware using xxc tool: `cat <(xxd jq300-orig.bin) <(xxd jq300.bin) | xxd -r > jq300-fullflash.bin`
+3. Download and patch the firmware using xxc tool: `cat <(xxd jq300-orig.bin) <(xxd jq300.bin) | xxd -r > jq300-fullflash.bin`
 4. Flash using `flashrom -p ch341a_spi -w jq300-fullflash.bin`
